@@ -1,6 +1,7 @@
 # AskPDF
 
 Ask anything to PDFs.
+[Demo](https://askpdfs.streamlit.app/)
 
 ## Installation
 
