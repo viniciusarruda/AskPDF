@@ -6,11 +6,11 @@ from langchain.llms import OpenAI
 
 
 class Agent:
-    def __init__(self) -> None:
-
-        self.embeddings = OpenAIEmbeddings()
+    def __init__(self, openai_api_key: str | None = None) -> None:
+        # if openai_api_key is None, then it will look the enviroment variable OPENAI_API_KEY
+        self.embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
         self.kb = KnowledgeBase(embeddings=self.embeddings)
-        self.llm = OpenAI(temperature=0)
+        self.llm = OpenAI(temperature=0, openai_api_key=openai_api_key)
         self.chain = load_qa_chain(self.llm, chain_type="stuff")
 
     def ask(self, question: str) -> str:
