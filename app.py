@@ -27,14 +27,18 @@ def main():
     if len(st.session_state) == 0:
         st.session_state["OPENAI_API_KEY"] = os.environ.get("OPENAI_API_KEY", "")
         if is_openai_api_key_set():
+            print('Creating agent')
             st.session_state["agent"] = Agent(st.session_state["OPENAI_API_KEY"])
         else:
             st.session_state["agent"] = None
 
     st.header("AskPDF")
 
-    if st.text_input("OpenAI API Key", key="OPENAI_API_KEY"):
-        st.session_state["agent"] = Agent(st.session_state["OPENAI_API_KEY"])
+    if st.text_input("OpenAI API Key", value=st.session_state["OPENAI_API_KEY"], key="input_OPENAI_API_KEY"):
+        if len(st.session_state["input_OPENAI_API_KEY"]) > 0 and st.session_state["input_OPENAI_API_KEY"] != st.session_state["OPENAI_API_KEY"]:
+            st.session_state["OPENAI_API_KEY"] = st.session_state["input_OPENAI_API_KEY"]
+            print('Creating agent')
+            st.session_state["agent"] = Agent(st.session_state["OPENAI_API_KEY"])
 
     st.subheader("Upload a document")
     st.file_uploader(
