@@ -7,10 +7,9 @@ from langchain.llms import OpenAI
 
 class Agent:
     def __init__(self) -> None:
+
         self.embeddings = OpenAIEmbeddings()
-        self.kb = KnowledgeBase(
-            index_name="index", persistence_folder=os.path.join("data", "faiss_index"), embeddings=self.embeddings
-        )
+        self.kb = KnowledgeBase(embeddings=self.embeddings)
         self.llm = OpenAI(temperature=0)
         self.chain = load_qa_chain(self.llm, chain_type="stuff")
 
